@@ -5,7 +5,7 @@ const StudentDashboard = () => {
   const navigate = useNavigate();
 
   // Logged in user email
-  const email = localStorage.getItem("userEmail") || "User";
+  // const _email = localStorage.getItem("userEmail") || "User";
 
   return (
     <DashboardLayout>

@@ -10,10 +10,10 @@ This system allows students to apply for NOC online and enables administrators t
 
 The **NOC Management System** eliminates manual paperwork by providing an online platform where:
 
-* Students can submit internship NOC requests
-* Upload required documents
-* Track application status
-* Admin can verify and manage requests in real-time
+- Students can submit internship NOC requests
+- Upload required documents
+- Track application status
+- Admin can verify and manage requests in real-time
 
 The project demonstrates full-stack development skills including authentication, REST APIs, database integration, and role-based access control.
 
@@ -23,54 +23,55 @@ The project demonstrates full-stack development skills including authentication,
 
 ### 👨‍🎓 Student Module
 
-* Student Registration & Login
-* Secure Authentication (JWT)
-* Apply for NOC
-* Upload Offer Letter & Fee Receipt
-* View Application Status
-* One Pending Application Restriction
+- Student Registration & Login
+- Secure Authentication (JWT)
+- Apply for NOC
+- Upload Offer Letter & Fee Receipt
+- View Application Status
+- One Pending Application Restriction
 
 ### 🧑‍💼 Admin Module
 
-* Admin Login
-* View All Applications
-* Approve / Reject Requests
-* Real-time Status Update
+- Admin Login
+- View All Applications
+- Approve / Reject Requests
+- Real-time Status Update
 
 ### 🔐 Security Features
 
-* Password Hashing using bcrypt
-* JWT Authentication
-* Role-Based Access Control
-* Protected API Routes
+- Password Hashing using bcrypt
+- JWT Authentication
+- Role-Based Access Control
+- Protected API Routes
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-* javaScript
-* React.js
-* TypeScript
-* Tailwind CSS
-* Axios
+
+- javaScript
+- React.js
+- TypeScript
+- Tailwind CSS
+- Axios
 
 ### Backend
 
-* Node.js
-* Express.js
-* REST API Architecture
+- Node.js
+- Express.js
+- REST API Architecture
 
 ### Database
 
-* MongoDB Atlas (Cloud Database)
-* Mongoose ODM
+- MongoDB Atlas (Cloud Database)
+- Mongoose ODM
 
 ### Tools & Platforms
 
-* Thunder Client (API Testing)
-* Git & GitHub
-* VS Code
+- Thunder Client (API Testing)
+- Git & GitHub
+- VS Code
 
 ---
 
@@ -160,20 +161,20 @@ npm run dev
 
 ## 📸 Screenshots (Add Later)
 
-* Login Page
-* Student Dashboard
-* Apply NOC Form
-* Admin Panel
+- Login Page
+- Student Dashboard
+- Apply NOC Form
+- Admin Panel
 
 ---
 
 ## 🚀 Future Improvements
 
-* Email Notifications
-* Admin Analytics Dashboard
-* Role-based middleware enhancement
-* File preview system
-* Deployment automation (CI/CD)
+- Email Notifications
+- Admin Analytics Dashboard
+- Role-based middleware enhancement
+- File preview system
+- Deployment automation (CI/CD)
 
 ---
 
@@ -188,11 +189,11 @@ B.Tech Computer Science Student
 
 This project helped in understanding:
 
-* Full Stack Web Development
-* Authentication & Authorization
-* REST API Design
-* MongoDB Atlas Integration
-* Real-world project deployment workflow
+- Full Stack Web Development
+- Authentication & Authorization
+- REST API Design
+- MongoDB Atlas Integration
+- Real-world project deployment workflow
 
 ---
 
