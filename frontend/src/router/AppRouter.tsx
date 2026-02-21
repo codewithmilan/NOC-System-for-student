@@ -9,12 +9,18 @@ import Register from "../pages/Register";
 import StudentDashboard from "../pages/StudentDashboard";
 import Tracking from "../pages/Tracking";
 import AdminRoute from "../components/AdminRoute";
+import Landing from "../pages/Landing"; // ✅ NEW IMPORT
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+
+        {/* ✅ Landing Page (NEW HOME PAGE) */}
+        <Route path="/" element={<Landing />} />
+
+        {/* Existing Routes (UNCHANGED) */}
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot" element={<ForgotPassword />} />
 
@@ -44,14 +50,7 @@ const AppRouter = () => {
             </ProtectedRoute>
           }
         />
-        {/* <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        /> */}
+
         <Route
           path="/admin"
           element={
@@ -60,6 +59,7 @@ const AppRouter = () => {
             </AdminRoute>
           }
         />
+
       </Routes>
     </BrowserRouter>
   );
