@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://noc-system-for-student.onrender.com/api/api",
+  baseURL: "https://noc-system-for-student.onrender.com",
 });
 
 API.interceptors.request.use((config) => {
