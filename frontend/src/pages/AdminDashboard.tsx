@@ -5,6 +5,7 @@ import API from "../services/api";
 const AdminDashboard = () => {
   const [applications, setApplications] = useState<any[]>([]);
   const [filter, setFilter] = useState("All");
+  const [previewFile, setPreviewFile] = useState<string | null>(null);
 
   // ================= FETCH =================
   const fetchApplications = async () => {
@@ -23,13 +24,23 @@ const AdminDashboard = () => {
   // ================= APPROVE =================
   const approve = async (id: string) => {
     await API.put(`/admin/approve/${id}`);
-    fetchApplications();
+
+    setApplications((prev) =>
+      prev.map((app) =>
+        app._id === id ? { ...app, status: "Approved" } : app,
+      ),
+    );
   };
 
   // ================= REJECT =================
   const reject = async (id: string) => {
     await API.put(`/admin/reject/${id}`);
-    fetchApplications();
+
+    setApplications((prev) =>
+      prev.map((app) =>
+        app._id === id ? { ...app, status: "Rejected" } : app,
+      ),
+    );
   };
 
   // ================= FILTER =================
@@ -46,10 +57,11 @@ const AdminDashboard = () => {
 
   return (
     <DashboardLayout>
-      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+      {/* HEADER */}
+      <h1 className="text-xl md:text-3xl font-bold mb-6">Admin Dashboard</h1>
 
       {/* ================= STATS ================= */}
-      <div className="grid md:grid-cols-4 gap-6 mb-10">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <StatCard
           title="Total"
           value={total}
@@ -72,37 +84,40 @@ const AdminDashboard = () => {
         />
       </div>
 
-      {/* ================= FILTER BUTTONS ================= */}
-      <div className="flex gap-3 mb-6">
-        {["All", "Approved", "Pending", "Rejected"].map((item) => (
-          <button
-            key={item}
-            onClick={() => setFilter(item)}
-            className={`px-5 py-2 rounded-full transition ${
-              filter === item
-                ? "bg-indigo-600 text-white"
-                : "bg-gray-200 hover:bg-gray-300"
-            }`}
-          >
-            {item}
-          </button>
-        ))}
+      {/* ================= FILTER BAR ================= */}
+      <div className="sticky top-[64px] bg-gray-100 py-3 z-10 mb-4">
+        <div className="flex gap-3 overflow-x-auto">
+          {["All", "Approved", "Pending", "Rejected"].map((item) => (
+            <button
+              key={item}
+              onClick={() => setFilter(item)}
+              className={`px-4 py-2 whitespace-nowrap rounded-full text-sm transition ${
+                filter === item
+                  ? "bg-indigo-600 text-white shadow"
+                  : "bg-white border hover:bg-gray-200"
+              }`}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* ================= APPLICATION LIST ================= */}
-      <div className="grid gap-6">
+      <div className="space-y-4">
         {filteredApps.map((app) => (
           <div
             key={app._id}
-            className="bg-white p-6 rounded-xl shadow flex justify-between items-center"
+            className="bg-white p-5 rounded-xl shadow-sm border hover:shadow-md transition"
           >
+            {/* INFO */}
             <div>
-              <h2 className="text-xl font-semibold">{app.companyName}</h2>
+              <h2 className="text-lg font-semibold">{app.companyName}</h2>
 
-              <p className="text-gray-600">{app.role}</p>
+              <p className="text-gray-600 text-sm">{app.role}</p>
 
               <span
-                className={`text-sm font-semibold ${
+                className={`text-xs font-semibold ${
                   app.status === "Approved"
                     ? "text-green-600"
                     : app.status === "Rejected"
@@ -114,51 +129,83 @@ const AdminDashboard = () => {
               </span>
             </div>
 
-            <div className="flex gap-3">
+            {/* ACTIONS */}
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 mt-4">
               <button
                 onClick={() => approve(app._id)}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:scale-105"
+                className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:scale-105 transition w-full sm:w-auto"
               >
-                Approve
+                 Approve
               </button>
 
               <button
                 onClick={() => reject(app._id)}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:scale-105"
+                className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:scale-105 transition w-full sm:w-auto"
               >
                 Reject
               </button>
-              <a
-                href={`http://localhost:5000/uploads/${app.offerLetter}`}
-                target="_blank"
-                className="text-blue-600 underline"
-              >
-                View Offer Letter
-              </a>
 
-              <a
-                href={`http://localhost:5000/uploads/${app.feeReceipt}`}
-                target="_blank"
-                className="text-purple-600 underline ml-4"
+              {/* PREVIEW BUTTONS */}
+              <button
+                onClick={() =>
+                  setPreviewFile(
+                    `http://localhost:5000/uploads/${app.offerLetter}`,
+                  )
+                }
+                className="text-blue-600 text-sm underline"
               >
-                View Fee Receipt
-              </a>
+                Offer Letter
+              </button>
+
+              <button
+                onClick={() =>
+                  setPreviewFile(
+                    `http://localhost:5000/uploads/${app.feeReceipt}`,
+                  )
+                }
+                className="text-purple-600 text-sm underline"
+              >
+                Fee Receipt
+              </button>
             </div>
           </div>
         ))}
       </div>
+
+      {/* ================= FILE PREVIEW MODAL ================= */}
+      {previewFile && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+          <div className="bg-white w-[95%] md:w-[80%] h-[85%] rounded-xl overflow-hidden relative">
+            {/* CLOSE */}
+            <button
+              onClick={() => setPreviewFile(null)}
+              className="absolute top-3 right-4 text-xl font-bold z-10"
+            >
+              ✕
+            </button>
+
+            {/* PREVIEW */}
+            <iframe
+              src={previewFile}
+              title="Document Preview"
+              className="w-full h-full"
+            />
+          </div>
+        </div>
+      )}
     </DashboardLayout>
   );
 };
 
 export default AdminDashboard;
 
-// ================= STAT CARD COMPONENT =================
+// ================= STAT CARD =================
 const StatCard = ({ title, value, color }: any) => (
   <div
-    className={`bg-gradient-to-r ${color} text-white p-6 rounded-2xl shadow-lg`}
+    className={`bg-gradient-to-r ${color}
+    text-white p-4 rounded-xl shadow-md`}
   >
-    <h3 className="text-lg opacity-80">{title}</h3>
-    <p className="text-4xl font-bold mt-2">{value}</p>
+    <p className="text-xs opacity-80">{title}</p>
+    <p className="text-2xl font-bold">{value}</p>
   </div>
 );

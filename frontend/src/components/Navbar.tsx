@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { Menu } from "lucide-react";
 
-const Navbar = () => {
+const Navbar = ({ setMenuOpen }: any) => {
 
   // ✅ get data from localStorage
   const role = localStorage.getItem("role");
@@ -14,12 +15,25 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center bg-white px-8 py-4 shadow">
+    <div className="flex justify-between items-center bg-white px-4 md:px-8 py-4 shadow">
 
-      {/* LEFT TITLE */}
-      <h1 className="text-lg font-semibold text-gray-700">
-        {role === "admin" ? "Admin Panel" : "Dashboard"}
-      </h1>
+      {/* LEFT SECTION */}
+      <div className="flex items-center gap-3">
+
+        {/* ✅ MOBILE HAMBURGER BUTTON */}
+        <button
+          className="md:hidden"
+          onClick={() => setMenuOpen(true)}
+        >
+          <Menu size={26} />
+        </button>
+
+        {/* TITLE */}
+        <h1 className="text-lg font-semibold text-gray-700">
+          {role === "admin" ? "Admin Panel" : "Dashboard"}
+        </h1>
+
+      </div>
 
       {/* RIGHT PROFILE */}
       <div className="relative">

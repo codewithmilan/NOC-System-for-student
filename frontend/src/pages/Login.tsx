@@ -37,6 +37,7 @@ const Login = () => {
       localStorage.setItem("role", res.data.user.role);
       localStorage.setItem("userEmail", res.data.user.email);
       localStorage.setItem("userName", res.data.user.name);
+      
 
       // ✅ FIX 3 — redirect
       if (res.data.user.role === "admin") {
